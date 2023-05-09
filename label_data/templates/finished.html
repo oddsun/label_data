@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Headlines Classified</title>
+    <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .download-button {
+        display: inline-block;
+        padding: 8px 12px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 2em;
+    }
+
+    .download-button:hover {
+        background-color: #0056b3;
+        text-decoration: none;
+        color: #fff;
+    }
+    </style>
+</head>
+<body>
+    <h1>All headlines have been classified.</h1>
+    <br/>
+    <a href="/download_csv" class="download-button">Download CSV</a>
+    <br/>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>name</th>
+          <th>Headline</th>
+          <th>Sentiment</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for headline in headlines %}
+          <tr>
+            <td>{{ headline.id }}</td>
+            <td>{{ headline.name }}</td>
+            <td>{{ headline.headline }}</td>
+            <td>{{ headline.sentiment }}</td>
+            <td>{{ headline.category }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Headline Sentiment Classifier</title>
+    <style>
+      .button-container, .categories {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+      }
+
+      .sentiment-button {
+        padding: 8px 12px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .category-option {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sentiment-button:focus {
+        outline: none;
+      }
+
+      .positive-button {
+        background-color: #28a745;
+        color: #fff;
+      }
+
+      .positive-button:hover {
+        background-color: #218838;
+      }
+
+      .negative-button {
+        background-color: #dc3545;
+        color: #fff;
+      }
+
+      .negative-button:hover {
+        background-color: #c82333;
+      }
+
+      .neutral-button {
+        background-color: #6c757d;
+        color: #fff;
+      }
+
+      .neutral-button:hover {
+        background-color: #5a6268;
+      }
+
+      .card {
+        position: relative;
+        width: 80%;
+        max-width: 600px;
+        margin: 30px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .headline {
+        font-size: 1.5rem;
+        margin: 1.5rem 0;
+        height: 12rem;
+        overflow-wrap: anywhere;
+      }
+
+      .headline-info {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+
+      .name {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+    </style>
+</head>
+<body>
+    <div class="card">
+      <div class="headline">{{ headline.headline }}</div>
+      <div class="headline-info">ID: {{ headline.id }}</div>
+      <div class="name">Name: {{ headline.name }}</div>
+
+      <form action="/classify" method="post">
+        <input type="hidden" name="headline_id" value="{{ headline.id }}">
+          <div class="button-container">
+            <button type="submit" name="sentiment" value="positive" class="sentiment-button positive-button">Positive</button>
+            <button type="submit" name="sentiment" value="negative" class="sentiment-button negative-button">Negative</button>
+            <button type="submit" name="sentiment" value="neutral" class="sentiment-button neutral-button">Neutral</button>
+            <button type="submit" name="sentiment" value="unrelated" class="sentiment-button">Unrelated</button>
+          </div>
+          <div class="categories">
+            <div class="category-option">
+              <input type="radio" id="category-ads" name="category" value="ads">
+              <label for="category-ads">Ads</label>
+            </div>
+            <div class="category-option">
+              <input type="radio" id="category-lawsuit" name="category" value="lawsuit">
+              <label for="category-lawsuit">Lawsuit</label>
+            </div>
+            <div class="category-option">
+              <input type="radio" id="category-crime" name="category" value="crime">
+              <label for="category-lawsuit">Crime</label>
+            </div>
+            <div class="category-option">
+              <input type="radio" id="category-other" name="category" value="other" checked>
+              <label for="category-lawsuit">Other</label>
+            </div>
+          </div>
+
+      </form>
+    </div>
+    {% if headline.id > 1 %}
+        <form action="/undo/{{ headline.id-1 }}" method="post" class="button-container"><button type="submit" class="sentiment-button">Back</button></form>
+    {% endif %}
+</body>
+</html>
