@@ -1,7 +1,7 @@
-[![Coverage badge](https://raw.githubusercontent.com/oddsun/label_data/python-coverage-comment-action-data/badge.svg)](https://htmlpreview.github.io/?https://github.com/oddsun/label_data/blob/python-coverage-comment-action-data/htmlcov/index.html)
-[![GitHub license](https://img.shields.io/github/license/oddsun/label_data)](https://github.com/oddsun/label_data/blob/main/LICENSE)
-[![build](https://github.com/oddsun/label_data/actions/workflows/python-ci.yml/badge.svg)](https://github.com/oddsun/label_data/actions/workflows/python-ci.yml)
-![GitHub top language](https://img.shields.io/github/languages/top/oddsun/label_data)
+[![Coverage badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/oddsun/label_data/python-coverage-comment-action-data/endpoint.json?style=flat-square)](https://htmlpreview.github.io/?https://github.com/oddsun/label_data/blob/python-coverage-comment-action-data/htmlcov/index.html)
+[![GitHub](https://img.shields.io/github/license/oddsun/label_data?style=flat-square)](https://github.com/oddsun/label_data/blob/main/LICENSE)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/oddsun/label_data/python-ci.yml?style=flat-square)](https://github.com/oddsun/label_data/actions/workflows/python-ci.yml)
+![GitHub top language](https://img.shields.io/github/languages/top/oddsun/label_data?style=flat-square)
 
 ## Overview
 
