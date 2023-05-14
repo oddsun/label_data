@@ -1,0 +1,39 @@
+repos:
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: poetry run flake8 label_data/ tests/
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: ruff
+        name: ruff
+        entry: poetry run ruff label_data/ tests/
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: black
+        name: black
+        entry: poetry run black label_data/ tests/
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: isort
+        name: isort
+        entry: poetry run isort label_data/ tests/
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy label_data/ tests/
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: pytest
+        name: pytest
+        entry: poetry run pytest
+        language: system
+        always_run: true
+        pass_filenames: false

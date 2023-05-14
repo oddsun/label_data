@@ -17,13 +17,13 @@ uvicorn label_data.main:app
 
 ## Setup alembic (only for initial dev)
 
-To initialize alembic
+### 1. To initialize alembic
 
 ```bash
 alembic init alembic
 ```
 
-Update `alembic/env.py` to use database url from env, and import model
+### 2. Update `alembic/env.py` to use database url from env, and import model
 
 add
 
@@ -41,7 +41,7 @@ from label_data.models import Base
 target_metadata = Base.metadata
 ```
 
-Autogenerate migration
+### 3. Autogenerate migration
 
 ```bash
 alembic revision --autogenerate -m "message"
