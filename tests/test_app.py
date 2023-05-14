@@ -63,7 +63,7 @@ def test_classify_headline(client):
     response = client.post(
         "/classify",
         data={"headline_id": 1, "sentiment": "neutral", "category": "other"},
-        allow_redirects=False,
+        follow_redirects=False,
     )
     assert response.status_code == 303
 
@@ -84,12 +84,12 @@ def test_undo_endpoint(client):
     response = client.post(
         "/classify",
         data={"headline_id": 1, "sentiment": "positive", "category": "ads"},
-        allow_redirects=False,
+        follow_redirects=False,
     )
     assert response.status_code == 303
 
     # Then, undo the classification
-    response = client.post("/undo/1", allow_redirects=False)
+    response = client.post("/undo/1", follow_redirects=False)
     assert response.status_code == 303
 
     # Verify that the sentiment and category for the headline are back to None
@@ -102,7 +102,7 @@ def test_undo_endpoint(client):
 
 def test_csv_upload(client):
     csv_data = (
-        "id,identifier,headline,name\n" "2,Another id,Another headline,Another name\n"
+        "id,identifier,headline,name\n" "3,Another id,Another headline,Another name\n"
     )
     response = client.post(
         "/upload", files={"file": ("test.csv", csv_data, "text/csv")}
@@ -118,15 +118,6 @@ def test_csv_upload(client):
     db.close()
 
 
-def test_download_csv(client):
-    response = client.get("/download_csv")
-    assert response.status_code == 200
-    assert response.headers["content-type"] == "text/csv; charset=utf-8"
-    # Check that the downloaded CSV contains the correct data
-    assert "Test headline" in response.text
-    assert "Another headline" in response.text
-
-
 def test_finished(client):
     client.post(
         "/classify",
@@ -134,9 +125,22 @@ def test_finished(client):
     )
     response = client.post(
         "/classify",
-        data={"headline_id": 2, "sentiment": "positive", "category": "ads"},
+        data={"headline_id": 2, "sentiment": "negative", "category": "lawsuit"},
     )
     assert response.status_code == 200
     assert "All headlines have been classified." in response.text
     assert "Test headline" in response.text
     assert "Another headline" in response.text
+
+
+def test_download_csv(client):
+    response = client.get("/download_csv")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "text/csv; charset=utf-8"
+    # Check that the downloaded CSV contains the correct data
+    expected_text = (
+        "id,identifier,headline,name,sentiment,category\n"
+        "1,Test id,Test headline,Test name,positive,ads\n"
+        "2,Another id,Another headline,Another name,negative,lawsuit\n"
+    )
+    assert response.text == expected_text
