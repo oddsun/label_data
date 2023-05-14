@@ -1,12 +1,11 @@
 [![Coverage badge](https://raw.githubusercontent.com/oddsun/label_data/python-coverage-comment-action-data/badge.svg)](https://htmlpreview.github.io/?https://github.com/oddsun/label_data/blob/python-coverage-comment-action-data/htmlcov/index.html)
-[![GitHub license](https://img.shields.io/github/license/oddsun/label_data)](https://github.com/oddsun/timer-electron/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/oddsun/label_data)](https://github.com/oddsun/label_data/blob/main/LICENSE)
 [![build](https://github.com/oddsun/label_data/actions/workflows/python-ci.yml/badge.svg)](https://github.com/oddsun/label_data/actions/workflows/python-ci.yml)
 ![GitHub top language](https://img.shields.io/github/languages/top/oddsun/label_data)
 
 ## Overview
 
 A quick, simple fastapi app to help manually label data.
-
 
 ## To run
 
@@ -18,7 +17,6 @@ poetry shell
 alembic upgrade head
 uvicorn label_data.main:app
 ```
-
 
 ## Setup alembic (only for initial dev)
 
