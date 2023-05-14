@@ -1,0 +1,46 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python CI Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  ci:
+    if: ${{ github.triggering_actor != 'dependabot[bot]' }}
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: [ "3.8", "3.9", "3.10", "3.11" ]
+        poetry-version: [ "1.1.15" ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "poetry"
+      - name: Set Poetry environment
+        if: runner.os != 'Windows'
+        run: |
+          poetry env use ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: poetry install
+      - name: Run lint
+        run: |
+          poetry run flake8 label_data tests
+          poetry run ruff label_data tests
+          poetry run black label_data tests
+          poetry run isort label_data tests
+      - name: Run mypy
+        run: poetry run mypy label_data tests
+      - name: Run pytest
+        run: poetry run pytest

@@ -1,0 +1,57 @@
+name: Coverage CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  test:
+    name: Run tests & display coverage
+    runs-on: ubuntu-latest
+    if: ${{ github.triggering_actor != 'dependabot[bot]' }}
+    permissions:
+      # Gives the action the necessary permissions for publishing new
+      # comments in pull requests.
+      pull-requests: write
+      # Gives the action the necessary permissions for pushing data to the
+      # python-coverage-comment-action branch, and for editing existing
+      # comments (to avoid publishing multiple comments in the same PR)
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "poetry"
+      - name: Set Poetry environment
+        if: runner.os != 'Windows'
+        run: |
+          poetry env use 3.10
+      - name: Install dependencies
+        run: |
+          poetry install
+      - name: Test with pytest
+        run: |
+          poetry run pytest
+      - name: Pytest coverage comment (method 1)
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-xml-coverage-path: ./coverage.xml
+          junitxml-path: ./pytest.xml
+      - name: Coverage comment (method 2)
+        id: coverage_comment
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Store Pull Request comment to be posted
+        uses: actions/upload-artifact@v3
+        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
+        with:
+          # If you use a different name, update COMMENT_ARTIFACT_NAME accordingly
+          name: python-coverage-comment-action
+          # If you use a different name, update COMMENT_FILENAME accordingly
+          path: python-coverage-comment-action.txt
