@@ -6,9 +6,9 @@ name: Python CI Pipeline
 on:
   workflow_dispatch:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   ci:
@@ -34,6 +34,9 @@ jobs:
           poetry env use ${{ matrix.python-version }}
       - name: Install Dependencies
         run: poetry install
+      - name: Install pytest dependencies (linux)
+        if: runner.os == 'Linux' && matrix.python-version != "3.11"
+        run: sudo apt install -y python-exceptiongroup
       - name: Run lint
         run: |
           poetry run flake8 label_data tests

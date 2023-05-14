@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - "master"
+      - "main"
 
 jobs:
   test:
@@ -25,12 +25,12 @@ jobs:
         run: pipx install poetry
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
           cache: "poetry"
       - name: Set Poetry environment
         if: runner.os != 'Windows'
         run: |
-          poetry env use 3.10
+          poetry env use 3.11
       - name: Install dependencies
         run: |
           poetry install
