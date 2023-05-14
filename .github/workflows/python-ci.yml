@@ -35,7 +35,7 @@ jobs:
       - name: Install Dependencies
         run: poetry install
       - name: Install pytest dependencies (linux)
-        if: runner.os == 'Linux' && matrix.python-version != "3.11"
+        if: runner.os == 'Linux' && matrix.python-version != '3.11'
         run: sudo apt install -y python-exceptiongroup
       - name: Run lint
         run: |
