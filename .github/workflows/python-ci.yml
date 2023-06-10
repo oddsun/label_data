@@ -36,10 +36,10 @@ jobs:
         run: poetry install
       - name: Run lint
         run: |
-          poetry run flake8 label_data tests
           poetry run ruff label_data tests
           poetry run black label_data tests
           poetry run isort label_data tests
+          poetry run flake8 label_data tests
       - name: Run mypy
         run: poetry run mypy label_data tests
       - name: Run pytest
